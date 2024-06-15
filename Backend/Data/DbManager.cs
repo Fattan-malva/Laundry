@@ -110,14 +110,14 @@ public class DbManager
     {
         using (MySqlConnection connection = _connection)
         {
-            string query = "UPDATE owner SET id=@Id, namaowner=@Namaowner, nohp=@Nohp, tanggalmasuk=@Tanggalmasuk WHERE id=@Id";
+            string query = "UPDATE owner SET namaowner=@Namaowner, nohp=@Nohp, tanggalmasuk=@Tanggalmasuk WHERE id=@Id";
             using MySqlCommand command = new MySqlCommand(query, connection);
             {
                 command.Parameters.AddWithValue("@Namaowner", owner.namaowner);
                 command.Parameters.AddWithValue("@Nohp", owner.nohp);
                 command.Parameters.AddWithValue("@Tanggalmasuk", owner.tanggalmasuk);
                 command.Parameters.AddWithValue("@Id", owner.id);
-             
+
 
                 connection.Open();
                 return command.ExecuteNonQuery();
@@ -140,15 +140,15 @@ public class DbManager
         }
     }
 
-    //UNIT============================================================================================
+    //UNIT====================================================================================================================
 
-public class UnitNama
-{
-    public int id { get; set; }
-    public string? idpelanggan { get; set; }
-    public int berat { get; set; }
-    public string? namabarang { get; set; }
-}
+    public class UnitNama
+    {
+        public int id { get; set; }
+        public string? idpelanggan { get; set; }
+        public int berat { get; set; }
+        public string? namabarang { get; set; }
+    }
     public List<UnitNama> GetAllUnits()
     {
         List<UnitNama> unitnamaList = new List<UnitNama>();
@@ -211,7 +211,7 @@ public class UnitNama
                             Unit info = new Unit
                             {
                                 id = Convert.ToInt32(reader["Id"]),
-                                idpelanggan= Convert.ToInt32(reader["Idpelanggan"]),
+                                idpelanggan = Convert.ToInt32(reader["Idpelanggan"]),
                                 // idpelanggan = reader["Idpelanggan"].ToString(),
                                 berat = Convert.ToInt32(reader["Berat"]),
                                 namabarang = reader["Namabarang"].ToString(),
@@ -251,13 +251,14 @@ public class UnitNama
     {
         using (MySqlConnection connection = _connection)
         {
-            string query = "UPDATE unit SET id=@Id, idpelanggan=@Idpelanggan, berat=@Berat,namabarang=@Namabarang WHERE id=@Id";
+            string query = "UPDATE unit SET  idpelanggan=@Idpelanggan, berat=@Berat,namabarang=@Namabarang WHERE id=@Id";
             using MySqlCommand command = new MySqlCommand(query, connection);
             {
                 command.Parameters.AddWithValue("@Idpelanggan", unit.idpelanggan);
                 command.Parameters.AddWithValue("@Berat", unit.berat);
                 command.Parameters.AddWithValue("@Namabarang", unit.namabarang);
                 command.Parameters.AddWithValue("@Id", unit.id);
+
 
                 connection.Open();
                 return command.ExecuteNonQuery();
@@ -279,6 +280,91 @@ public class UnitNama
             }
         }
     }
+    //DATA LAUNDRY=========================================================================================================================
+
+
+    public class DataLaundryNama
+    {
+
+        public int id { get; set; }
+        public string idowner { get; set; }
+        public string idbarang { get; set; }
+        public int hargaperkg { get; set; }
+        public int hargatotal { get; set; }
+        public string idtanggalmasuk { get; set; }
+        public DateTime tanggalkeluar { get; set; }
+    }
+    public List<DataLaundryNama> GetAllDataLaundrys()
+    {
+        List<DataLaundryNama> datalaundrynamaList = new List<DataLaundryNama>();
+        try
+        {
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                string query = @"
+                SELECT 
+                    datalaundry.id AS Id, 
+                    owner.namaowner AS Idowner, 
+                    unit.namabarang AS Idbarang, 
+                    datalaundry.hargaperkg AS Hargaperkg, 
+                    (datalaundry.hargaperkg * unit.berat) AS Hargatotal, 
+                    owner.tanggalmasuk AS Tanggalmasuk,
+                    datalaundry.tanggalkeluar AS Tanggalkeluar 
+                FROM 
+                    datalaundry 
+                JOIN 
+                    owner ON datalaundry.idowner = owner.id 
+                JOIN 
+                    unit ON datalaundry.idbarang = unit.id";
+
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                using (MySqlDataReader reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        DataLaundryNama datalaundry = new DataLaundryNama
+                        {
+                            id = Convert.ToInt32(reader["Id"]),
+                            idowner = reader["Idowner"].ToString(),
+                            idbarang = reader["Idbarang"].ToString(),
+                            hargaperkg = Convert.ToInt32(reader["Hargaperkg"]),
+                            hargatotal = Convert.ToInt32(reader["Hargatotal"]),
+                            idtanggalmasuk = reader["Tanggalmasuk"].ToString(),
+                            // idtanggalmasuk = DateTime.Parse(reader["Tanggalmasuk"].ToString()),
+                            tanggalkeluar = DateTime.Parse(reader["Tanggalkeluar"].ToString()),
+                        };
+                        datalaundrynamaList.Add(datalaundry);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        return datalaundrynamaList;
+    }
+  public int CreateDataLaundry(DataLaundry dataLaundry)
+{
+    using (MySqlConnection connection = _connection)
+    {
+        string query = "INSERT INTO dataLaundry (idowner, idbarang, hargaperkg, idtanggalmasuk, tanggalkeluar) VALUES (@Idowner, @Idbarang, @Hargaperkg, @Tanggalmasuk, @Tanggalkeluar)";
+        using (MySqlCommand command = new MySqlCommand(query, connection))
+        {
+            command.Parameters.AddWithValue("@Idowner", dataLaundry.idowner);
+            command.Parameters.AddWithValue("@Idbarang", dataLaundry.idbarang);
+            command.Parameters.AddWithValue("@Hargaperkg", dataLaundry.hargaperkg);
+            command.Parameters.AddWithValue("@Tanggalmasuk", dataLaundry.idtanggalmasuk);  // Ensure this matches the correct property
+            command.Parameters.AddWithValue("@Tanggalkeluar", dataLaundry.tanggalkeluar); // Ensure this matches the correct property
+
+            connection.Open();
+            return command.ExecuteNonQuery();
+        }
+    }
+}
+
+
 
 
 }
