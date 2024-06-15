@@ -7,16 +7,10 @@ class Home extends Component {
             <div className='card'>
                <div className='container'>
                     <div className='Titel'>
-                        SD Ceria Anak Bangsa
+                        Laundry JAYA JAYA JAYAA
                     </div>
                     <div className='content'>
-                        Kelompok 5
-                        <ul>
-                            <li>Faidzah Mastadzul Mutiara Husnah</li>
-                            <li>Hanny Khuril Aulia</li>
-                            <li>Indra Febry Setyawan</li>
-                            <li>M. Arofan Nurhadi</li>
-                        </ul>
+                        UIIII
                     </div>
                 </div>
             </div>

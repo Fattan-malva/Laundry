@@ -22,26 +22,17 @@ function App() {
       <div className="app-content">
         <Routes>
           <Route path="/" element={<Home/>} />
-          <Route path="/listnilai" element={<ListNilai/>} />
-          <Route path="/nilai_add" element={<NilaiAdd/>} />
-          <Route path="/nilai_edit/:id" element={<NilaiEdit/>} />
-          <Route path="/nilai_delete/:id" element={<NilaiDelete/>} />
-          <Route path="/listkehadiran" element={<ListKehadiran/>} />
-          <Route path="/kehadiran_add" element={<KehadiranAdd/>} />
-          <Route path="/kehadiran_edit/:id" element={<KehadiranEdit/>}/>
-          <Route path="/kehadiran_delete/:id" element={<KehadiranDelete/>}/>
-          <Route path="/listpelajaran" element={<ListPelajaran/>} />
-          <Route path="/pelajaran_add" element={<PelajaranAdd/>} />
-          <Route path="/pelajaran_edit/:id" element={<PelajaranEdit/>} />
-          <Route path="/pelajaran_delete/:id" element={<PelajaranDelete/>} />
+
           <Route path="/listowner" element={<ListOwner/>}></Route>
           <Route path="/owner_add" element={<OwnerAdd/>} />
           <Route path="/owner_edit/:id" element={<OwnerEdit/>} />
           <Route path="/owner_delete/:id" element={<OwnerDelete/>} />
+
           <Route path="/listunit" element={<ListUnit/>} />
           <Route path="/unit_add" element={<UnitAdd/>} />
           <Route path="/unit_edit/:id" element={<UnitEdit/>} />
           <Route path="/unit_delete/:id" element={<UnitDelete/>} />
+          
         </Routes>
       </div>
     </Router>

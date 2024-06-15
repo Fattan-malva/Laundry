@@ -7,7 +7,7 @@ class Menu extends Component {
     return (
       <div>
         <header className="header">
-        <a href="https://www.akscoding.com" className="logo">SD Ceria Anak Bangsa</a>
+        <a href="https://www.akscoding.com" className="logo">Laundry Cakungrs</a>
           <input className="menu-btn" type="checkbox" id="menu-btn" />
           <label className="menu-icon" for="menu-btn">
             <span className="navicon"></span>

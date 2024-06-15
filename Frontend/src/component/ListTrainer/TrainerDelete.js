@@ -70,7 +70,7 @@ function TrainerDelete() {
                     Delete Data Owner "{formValue.nama}"
                 </div>
                 <div className='content'>
-                    <form onSubmit={handleSubnit}>
+                    <form onSubmit={handleSubmit}>
                         <input
                             type="text"
                             name="id"
