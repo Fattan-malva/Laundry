@@ -25,7 +25,7 @@ function ListUnit() {
             sortable: true,
         },
         {
-            name: 'Id Pelanggan',
+            name: 'Nama Pelanggan',
             selector: row => row.idpelanggan,
             sortable: true,
         },
