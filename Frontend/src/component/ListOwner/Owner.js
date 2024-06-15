@@ -41,7 +41,7 @@ function ListOwner() {
         },
         {
             name: 'Edit',
-            selector: row => <Link to={'/owner_update/'+row.id} className='btn btn-primary'>Edit</Link>,
+            selector: row => <Link to={'/owner_edit/'+row.id} className='btn btn-primary'>Edit</Link>,
             sortable: true,
         },
         {

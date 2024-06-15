@@ -51,7 +51,7 @@ function ListTrainer() {
         },
         {
             name: 'Edit',
-            selector: row => <Link to={'/trainer_update/'+row.id} className='btn btn-primary'>Edit</Link>,
+            selector: row => <Link to={'/trainer_edit/'+row.id} className='btn btn-primary'>Edit</Link>,
             sortable: true,
         },
         {
