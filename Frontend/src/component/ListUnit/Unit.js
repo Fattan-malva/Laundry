@@ -41,7 +41,7 @@ function ListUnit() {
         },
         {
             name: 'Edit',
-            selector: row => <Link to={'/unit_update/'+row.id} className='btn btn-primary'>Edit</Link>,
+            selector: row => <Link to={'/unit_edit/'+row.id} className='btn btn-primary'>Edit</Link>,
             sortable: true,
         },
         {
