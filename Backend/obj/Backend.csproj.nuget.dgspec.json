@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Project dengan Indra\\laundry\\Backend\\Backend.csproj": {}
+    "D:\\Code\\REACT\\Laundry\\Backend\\Backend.csproj": {}
   },
   "projects": {
-    "D:\\Project dengan Indra\\laundry\\Backend\\Backend.csproj": {
+    "D:\\Code\\REACT\\Laundry\\Backend\\Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Project dengan Indra\\laundry\\Backend\\Backend.csproj",
+        "projectUniqueName": "D:\\Code\\REACT\\Laundry\\Backend\\Backend.csproj",
         "projectName": "Backend",
-        "projectPath": "D:\\Project dengan Indra\\laundry\\Backend\\Backend.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "D:\\Project dengan Indra\\laundry\\Backend\\obj\\",
+        "projectPath": "D:\\Code\\REACT\\Laundry\\Backend\\Backend.csproj",
+        "packagesPath": "C:\\Users\\Windows 10\\.nuget\\packages\\",
+        "outputPath": "D:\\Code\\REACT\\Laundry\\Backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Windows 10\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
