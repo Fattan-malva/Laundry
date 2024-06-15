@@ -1,3 +1,5 @@
+using Microsoft.Net.Http.Headers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,5 +23,11 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(options => options
+.WithOrigins("http://localhost:3000")
+.WithHeaders(HeaderNames.ContentType)
+.WithMethods("GET","POST","PUT","DELETE")
+);
 
 app.Run();

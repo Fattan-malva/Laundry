@@ -5,6 +5,6 @@ public class DataLaundry{
     public int idbarang {get;set;}
     public int hargaperkg {get;set;}
     public int hargatotal {get;set;}
-    public int tanggalmasuk {get;set;}
+    public int idtanggalmasuk {get;set;}
     public DateTime tanggalkeluar {get;set;}
 }  
