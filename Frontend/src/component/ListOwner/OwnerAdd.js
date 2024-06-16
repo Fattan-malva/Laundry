@@ -6,7 +6,6 @@ function OwnerAdd() {
     const navigate = useNavigate();
 
     const [formValue, setFormValue] = React.useState({
-        id: '',
         namaowner: '',
         nohp: '',
         tanggalmasuk: ''
@@ -21,7 +20,6 @@ function OwnerAdd() {
 
     const handleSubnit = async() => {
         const FormDataInput = new FormData();
-        FormDataInput.append('id', formValue.id);
         FormDataInput.append('namaowner', formValue.namaowner);
         FormDataInput.append('nohp', formValue.nohp);
         FormDataInput.append('tanggalmasuk', formValue.tanggalmasuk);
@@ -50,14 +48,6 @@ function OwnerAdd() {
                 </div>
                 <div className='content'>
                     <form onSubmit={handleSubnit}>
-                        <input
-                            type="text"
-                            name="id"
-                            placeholder='Id Owner'
-                            value={formValue.id}
-                            required
-                            onChange={handleChange}
-                        /><br/><br/>
                         <input
                             type="text"
                             name="namaowner"

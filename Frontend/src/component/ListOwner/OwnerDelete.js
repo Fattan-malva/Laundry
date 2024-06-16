@@ -1,128 +1,69 @@
-import axios from 'axios';
-import React, { useState, useEffect, useCallback } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import axios from "axios";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 function OwnerDelete() {
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const [owner, setOwner] = useState({
+    id: '',
+    namaowner: '',
+    nohp: '',
+    tanggalmasuk: ''
+  });
 
-    const [formValue, setFormValue] = useState({
-        id: '',
-        namaowner: '',
-        nohp: '',
-        tanggalmasuk: ''
-    });
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    const fetchData = useCallback(async () => {
-        try {
-            const response = await axios.get('https://localhost:7221/owner/GetOwnerById?id='+id);
-            const data = response.data.data[0];
-            setFormValue(data);
-            console.log(data);
-        } catch (error) {
-            console.error(error);
-            alert('Data tidak ditemukan atau sudah dihapus!');
-        }
-    }, [id]);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `https://localhost:7221/owner/GetOwnerById?id=${id}`
+      );
+      const data = response.data;
+      setOwner({
+        id: data.id,
+        namaowner: data.namaowner,
+        nohp: data.nohp,
+        tanggalmasuk: data.tanggalmasuk
 
-    useEffect(() => {
-        fetchData();
-    }, [fetchData]);
-
-    const handleChange = (event) => {
-        setFormValue({
-            ...formValue,
-            [event.target.name]: event.target.value
-        });
+       
+      });
+    } catch (error) {
+      console.log(error);
+      alert("Data tidak ditemukan atau sudah dihapus!");
     }
+  };
 
-    const handleSubmit = async(event) => {
-        event.preventDefault();
-        const FormDataInput = new FormData();
-        FormDataInput.append('id', formValue.id);
-        FormDataInput.append('namaowner', formValue.namaowner);
-        FormDataInput.append('nohp', formValue.nohp);
-        FormDataInput.append('tanggalmasuk', formValue.tanggalmasuk);
-        alert('Data Berhasil Dihapus');
-        navigate('/listowner');
-        try {
-            const response = await axios({
-                method: "DELETE",
-                url: "https://localhost:7126/Trainer/DeleteTrainer?id="+id,
-                headers: { "Content-Type": "application/json" },
-            });
-            console.log(response)
-            window.location.reload();
-        } catch(error) {
-            console.log(error)
-            alert(error)
-        }
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      await axios.delete(
+        `https://localhost:7221/owner/DeleteOwner?id=${id}`
+      );
+      alert("Data berhasil dihapus");
+      window.location.href = "/listowner";
+    } catch (error) {
+      console.error(error);
+      alert("Error deleting data");
     }
+  };
 
-    return (
-        <div className="card">
-            <div className='container'>
-                <div className='Titel'>
-                    Delete Data Mahasiswa "{formValue.nama}"
-                </div>
-                <div className='content'>
-                    <form onSubmit={handleSubmit}>
-                    <input
-                            type="text"
-                            name="id"
-                            placeholder='Id Trainer'
-                            value={formValue.id}
-                            disabled
-                            onChange={handleChange}
-                        /><br/><br/>
-                        <input
-                            type="text"
-                            name="nama"
-                            placeholder='enter Nama'
-                            value={formValue.nama}
-                            disabled
-                            onChange={handleChange}
-                        /><br/><br/>
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder='enter email'
-                            value={formValue.email}
-                            disabled
-                            onChange={handleChange}
-                        /><br/><br/>
-                        <input
-                            type="password"
-                            name="password"
-                            placeholder='enter password'
-                            value={formValue.password}
-                            disabled
-                            onChange={handleChange}
-                        /><br/><br/>
-                        <input
-                            type="text"
-                            name="nohp"
-                            placeholder='enter nomor hp'
-                            value={formValue.nohp}
-                            disabled
-                            onChange={handleChange}
-                        /><br/><br/>
-                        <input
-                            type="number"
-                            name="status"
-                            min='0'
-                            max='1'
-                            placeholder='enter status'
-                            value={formValue.status}
-                            disabled
-                            onChange={handleChange}
-                        /><br/><br/>
-                        <button type="submit" className='btn btn-danger'>Hapus</button>
-                    </form>
-                </div>
-            </div>
+  return (
+    <div className="card">
+      <div className="container">
+        <div className="Titel">Hapus Data Owner {id}</div>
+        <div className="conten">
+          <form onSubmit={handleSubmit}>
+            <p>Yakin ingin menghapus owner {owner.namaowner}?</p>
+            <button type="submit" className="btn btn-danger">
+              Hapus
+            </button>
+          </form>
         </div>
-    )
+      </div>
+    </div>
+  );
 }
 
 export default OwnerDelete;

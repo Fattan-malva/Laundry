@@ -36,7 +36,7 @@ function ListOwner() {
         },
         {
             name: 'Tanggal Masuk',
-            selector: row => row.tanggalmasuk,
+            selector: (row) => new Date(row.tannggalmasuk).toLocaleDateString(),
             sortable: true,
         },
         {
