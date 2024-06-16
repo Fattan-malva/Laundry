@@ -17,39 +17,39 @@ public class DbManager
     }
     //OWNER================================================================================================
     public List<Owner> GetAllOwners()
+{
+    List<Owner> ownerList = new List<Owner>();
+    try
     {
-        List<Owner> ownerList = new List<Owner>();
-        try
+        using (MySqlConnection connection = new MySqlConnection(connectionString))
         {
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            string query = "SELECT * FROM Owner";
+            MySqlCommand command = new MySqlCommand(query, connection);
+            connection.Open();
+            using (MySqlDataReader reader = command.ExecuteReader())
             {
-                string query = "SELECT * FROM Owner";
-                MySqlCommand command = new MySqlCommand(query, connection);
-                connection.Open();
-                using (MySqlDataReader reader = command.ExecuteReader())
+                while (reader.Read())
                 {
-                    while (reader.Read())
+                    Owner owner = new Owner
                     {
-                        Owner owner = new Owner
-                        {
-                            id = Convert.ToInt32(reader["Id"]),
-                            namaowner = reader["Namaowner"].ToString(),
-                            nohp = reader["Nohp"].ToString(),
-                            tanggalmasuk = DateTime.Parse(reader["Tanggalmasuk"].ToString())
-
-                        };
-                        ownerList.Add(owner);
-                    }
+                        id = Convert.ToInt32(reader["Id"]),
+                        namaowner = reader["Namaowner"].ToString(),
+                        nohp = reader["Nohp"].ToString(),
+                        tanggalmasuk = !reader.IsDBNull(reader.GetOrdinal("Tanggalmasuk")) ? reader.GetDateTime("Tanggalmasuk") : (DateTime?)null
+                    };
+                    ownerList.Add(owner);
                 }
             }
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-        }
-        return ownerList;
-
     }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    return ownerList;
+}
+
+
 
     public List<Owner> GetOwnersById(int id)
     {
@@ -345,25 +345,26 @@ public class DbManager
         }
         return datalaundrynamaList;
     }
-  public int CreateDataLaundry(DataLaundry dataLaundry)
-{
-    using (MySqlConnection connection = _connection)
+    public int CreateDataLaundry(DataLaundry dataLaundry)
     {
-        string query = "INSERT INTO dataLaundry (idowner, idbarang, hargaperkg, idtanggalmasuk, tanggalkeluar) VALUES (@Idowner, @Idbarang, @Hargaperkg, @Tanggalmasuk, @Tanggalkeluar)";
-        using (MySqlCommand command = new MySqlCommand(query, connection))
+        using (MySqlConnection connection = _connection)
         {
-            command.Parameters.AddWithValue("@Idowner", dataLaundry.idowner);
-            command.Parameters.AddWithValue("@Idbarang", dataLaundry.idbarang);
-            command.Parameters.AddWithValue("@Hargaperkg", dataLaundry.hargaperkg);
-            command.Parameters.AddWithValue("@Tanggalmasuk", dataLaundry.idtanggalmasuk);  // Ensure this matches the correct property
-            command.Parameters.AddWithValue("@Tanggalkeluar", dataLaundry.tanggalkeluar); // Ensure this matches the correct property
+            string query = "INSERT INTO dataLaundry (idowner,idbarang,hargaperkg,idtanggalmasuk,tanggalkeluar) VALUES (@Idowner,@Idbarang,@Hargaperkg,@Tanggalmasuk,@Tanggalkeluar)";
+            using MySqlCommand command = new MySqlCommand(query, connection);
+            {
+                command.Parameters.AddWithValue("@Id", dataLaundry.id);
+                command.Parameters.AddWithValue("@Idowner", dataLaundry.idowner);
+                command.Parameters.AddWithValue("@Idbarang", dataLaundry.idbarang);
+                command.Parameters.AddWithValue("@Hargaperkg", dataLaundry.hargaperkg);
+                command.Parameters.AddWithValue("@Hargatotal", dataLaundry.hargatotal);
+                command.Parameters.AddWithValue("@Tanggalmasuk", dataLaundry.tanggalkeluar);
+                command.Parameters.AddWithValue("@Tanggalkeluar", dataLaundry.idtanggalmasuk);
 
-            connection.Open();
-            return command.ExecuteNonQuery();
+                connection.Open();
+                return command.ExecuteNonQuery();
+            }
         }
     }
-}
-
 
 
 
